@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shooting Game - Art Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="score-display">Score: 0</div>
+        <div id="quiz-count-display">맞춘 퀴즈: 0 / 4</div> <div id="start-message" class="overlay">
+             Click to Start
+             <p>Controls: Arrow Keys (Move), Spacebar (Shoot)</p>
+        </div>
+         <div id="game-over" class="overlay" style="display: none;">
+            GAME OVER
+            <p>Click to Restart</p>
+        </div>
+        <div id="final-results" class="overlay results-overlay" style="display: none;">
+             <h2>축하합니다! 모든 퀴즈를 완료했습니다!</h2>
+             <div id="final-results-content">
+                 </div>
+             <button id="restart-button">다시 시작</button>
+        </div>
+    </div>
+
+    <div id="quiz-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="quiz-question">Question?</h2>
+            <img id="quiz-image" src="" alt="Quiz Artwork">
+            <div id="quiz-options">
+                </div>
+            <p id="quiz-feedback"></p>
+        </div>
+    </div>
+
+    <img id="player-sprite" src="player.jpg" alt="Player Ship" style="display: none;">
+
+    <script src="script.js"></script>
+</body>
+</html>

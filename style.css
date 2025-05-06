@@ -1,0 +1,210 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #222;
+    margin: 0;
+    font-family: sans-serif; /* 기본 폰트 */
+    /* 한국어 폰트 예시 (시스템에 설치되어 있어야 함) */
+    /* font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; */
+    color: white;
+}
+
+#game-container {
+    position: relative; /* Needed for overlays */
+    border: 2px solid white;
+}
+
+#gameCanvas {
+    display: block; /* Remove extra space below canvas */
+    background-color: black;
+}
+
+#score-display {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 1.2em;
+    z-index: 10; /* Make sure score is above canvas content if needed */
+}
+
+/* 퀴즈 카운터 스타일 추가 */
+#quiz-count-display {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-size: 1.2em;
+    z-index: 10;
+}
+
+/* 오버레이 공통 스타일 */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* 약간 더 어둡게 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    cursor: default; /* 기본 커서 */
+    z-index: 20;
+    padding: 20px;
+    box-sizing: border-box; /* 패딩이 크기에 포함되도록 */
+}
+.overlay p {
+    font-size: 0.6em;
+    margin-top: 10px;
+}
+#start-message, #game-over { /* 시작, 게임오버는 클릭 가능 */
+    cursor: pointer;
+}
+
+
+/* 결과 화면 스타일 */
+.results-overlay {
+    justify-content: flex-start; /* 위쪽부터 정렬 */
+    overflow-y: auto; /* 내용 많으면 스크롤 */
+}
+.results-overlay h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    flex-shrink: 0; /* 제목 줄어들지 않도록 */
+}
+#final-results-content {
+    width: 100%;
+    max-width: 600px; /* 최대 너비 */
+    margin-bottom: 20px; /* 버튼과의 간격 */
+    overflow-y: auto; /* 내용만 스크롤 (필요시) */
+    flex-grow: 1; /* 남은 공간 차지 (스크롤 위해) */
+}
+.result-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: left;
+}
+.result-item img {
+    width: 50px; /* 작은 이미지 크기 */
+    height: 50px;
+    object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+    margin-right: 15px;
+    border: 1px solid #555;
+    flex-shrink: 0; /* 이미지가 줄어들지 않도록 */
+}
+.result-item-info {
+    display: flex;
+    flex-direction: column;
+}
+.result-item-info h3 {
+    font-size: 0.8em;
+    margin: 0 0 5px 0;
+}
+.result-item-info p {
+    font-size: 0.6em;
+    margin: 0;
+    color: #ccc;
+}
+
+#restart-button {
+    padding: 10px 20px;
+    font-size: 0.8em;
+    cursor: pointer;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: auto; /* 버튼을 아래쪽에 배치 */
+    flex-shrink: 0; /* 버튼 크기 유지 */
+}
+#restart-button:hover {
+     background-color: #003d80;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 30; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    /* Flex centering for modal itself */
+    /* display: flex; */ /* JS로 토글하므로 여기선 제거 */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #333;
+    color: white;
+    /* margin: 10% auto; */ /* Flex 사용 시 불필요 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px; /* Maximum width */
+    border-radius: 10px;
+    text-align: center;
+    position: relative; /* 필요시 */
+}
+
+#quiz-image {
+    max-width: 90%;
+    max-height: 300px; /* Limit image height */
+    margin: 15px auto;
+    display: block;
+    border: 1px solid #555;
+}
+
+#quiz-options {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quiz-option-button {
+    background-color: #0056b3; /* Blue */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quiz-option-button:hover {
+    background-color: #003d80; /* Darker blue */
+}
+
+#quiz-feedback {
+    margin-top: 15px;
+    font-weight: bold;
+    min-height: 1.2em; /* Prevent layout shift */
+}
+
+#quiz-feedback.correct {
+    color: lightgreen;
+}
+
+#quiz-feedback.incorrect {
+    color: lightcoral;
+}
