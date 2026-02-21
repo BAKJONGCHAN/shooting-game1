@@ -521,6 +521,9 @@ function gameLoop() {
             if (lastEnemyDestroyedPos) {
                 jewels.push(createJewel(lastEnemyDestroyedPos.x, lastEnemyDestroyedPos.y));
                 lastEnemyDestroyedPos = null;
+            } else {
+                // 적을 모두 격추시키지 못했더라도 화면 밖으로 사라지면 다음 웨이브를 생성
+                spawnEnemies(currentWaveSize);
             }
         }
 
@@ -553,7 +556,7 @@ playerSprite.onerror = () => {
      console.error("Player image failed to load!");
      playerImageLoaded = false;
      startMessage.style.display = 'flex';
-}
 if (playerSprite.complete && playerSprite.naturalHeight !== 0) {
      playerSprite.onload();
+
 }
