@@ -552,11 +552,14 @@ playerSprite.onload = () => {
     playerImageLoaded = true;
     startMessage.style.display = 'flex';
 };
-playerSprite.onerror = () => {
-     console.error("Player image failed to load!");
-     playerImageLoaded = false;
-     startMessage.style.display = 'flex';
-if (playerSprite.complete && playerSprite.naturalHeight !== 0) {
-     playerSprite.onload();
 
+playerSprite.onerror = () => {
+    console.error("Player image failed to load!");
+    playerImageLoaded = false;
+    startMessage.style.display = 'flex';
+};
+
+// 이미지가 캐시 등으로 이미 로드된 경우를 대비한 안전장치
+if (playerSprite.complete && playerSprite.naturalHeight !== 0) {
+    playerSprite.onload();
 }
